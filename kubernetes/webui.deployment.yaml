@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webui-frontend
+  labels:
+    app: webui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webui
+  template:
+    metadata:
+      labels:
+        app: webui
+    spec:
+      containers:
+        - name: open-webui
+          image: ghcr.io/open-webui/open-webui:main
+          ports:
+            - containerPort: 8080
+          env:
+            - name: OLLAMA_API_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: webui-config 
+                  key: OLLAMA_API_BASE_URL
+            - name: OLLAMA_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: webui-config 
+                  key: OLLAMA_BASE_URL
+            - name: WEBUI_AUTH
+              valueFrom:
+                configMapKeyRef:
+                  name: webui-config 
+                  key: WEBUI_AUTH
+            - name: ENABLE_OLLAMA_API
+              valueFrom:
+                configMapKeyRef:
+                  name: webui-config 
+                  key: ENABLE_OLLAMA_API
+          resources:
+            requests:
+              memory: "4Gi"
+              cpu: "2"
+            limits:
+              memory: "6Gi"
+              cpu: "3"

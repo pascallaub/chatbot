@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: webui-config
+data:
+  OLLAMA_API_BASE_URL: "http://ollama-backend:11434"
+  OLLAMA_BASE_URL: "http://ollama-backend:11434"
+  WEBUI_AUTH: "False"
+  ENABLE_OLLAMA_API: "True"
